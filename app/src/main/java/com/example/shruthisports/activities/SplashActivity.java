@@ -1,10 +1,13 @@
-package com.example.shruthisports;
+package com.example.shruthisports.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.example.shruthisports.R;
+import com.example.shruthisports.activities.LoginActivity;
 
 public class SplashActivity extends AppCompatActivity {
 

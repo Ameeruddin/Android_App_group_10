@@ -1,8 +1,10 @@
-package com.example.shruthisports;
+package com.example.shruthisports.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.shruthisports.R;
 
 public class MainActivity extends AppCompatActivity {
 
