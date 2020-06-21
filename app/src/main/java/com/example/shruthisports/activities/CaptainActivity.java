@@ -10,7 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.shruthisports.HomeFragment;
+import com.example.shruthisports.fragments.HomeFragment;
 import com.example.shruthisports.R;
 import com.google.android.material.navigation.NavigationView;
 

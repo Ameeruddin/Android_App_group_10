@@ -1,12 +1,16 @@
-package com.example.shruthisports;
+package com.example.shruthisports.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.shruthisports.R;
 
 public class HomeFragment extends Fragment {
 

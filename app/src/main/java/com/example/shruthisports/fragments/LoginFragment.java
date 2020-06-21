@@ -85,7 +85,7 @@ public class LoginFragment extends Fragment {
             String userId=loginIdET.getText().toString();
             String password=loginPasswordET.getText().toString();
             Boolean captain=loginCaptainCB.isChecked();
-            data.put("userId",userId);
+            data.put("username",userId);
             data.put("password",password);
         }catch(Exception e){
             Toast.makeText(mContext,"Please check your details",Toast.LENGTH_LONG).show();
