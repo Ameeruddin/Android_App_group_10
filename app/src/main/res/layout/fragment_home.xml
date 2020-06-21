@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Home fragment"/>
-</RelativeLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_margin="25dp"
+        android:id="@+id/sportScheduleBtn"
+        android:text="Sports Schedule"
+        android:background="@android:color/holo_red_light"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_margin="25dp"
+        android:id="@+id/sportDetailsBtn"
+        android:text="Sports Details"
+        android:background="@android:color/holo_green_light"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_margin="25dp"
+        android:id="@+id/registerTeamsBtn"
+        android:text="Register Team"
+        android:background="@android:color/holo_blue_light"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_margin="25dp"
+        android:id="@+id/userProfileBtn"
+        android:text="User Profile"
+        android:background="@android:color/holo_orange_light"/>
+
+
+</LinearLayout>

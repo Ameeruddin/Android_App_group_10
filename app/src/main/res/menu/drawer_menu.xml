@@ -17,6 +17,10 @@
             android:icon="@drawable/ic_schedule"
             android:title="Sports Schedules"/>
 
+        <item android:id="@+id/nav_details"
+            android:icon="@drawable/ic_details"
+            android:title="Sports Details"/>
+
         <item android:id="@+id/nav_register"
             android:icon="@drawable/ic_register"
             android:title="Register Team"/>
