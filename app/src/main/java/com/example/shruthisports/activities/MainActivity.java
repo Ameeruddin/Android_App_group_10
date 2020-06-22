@@ -16,7 +16,10 @@ import android.view.MenuItem;
 import com.example.shruthisports.fragments.HomeFragment;
 import com.example.shruthisports.R;
 import com.example.shruthisports.fragments.ProfileFragment;
+import com.example.shruthisports.fragments.ScheduleFragment;
+import com.example.shruthisports.fragments.SportsDetailsFragment;
 import com.example.shruthisports.fragments.SportsListFragment;
+import com.example.shruthisports.fragments.UserTeamRegisterFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -75,7 +78,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_schedule:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new SportsListFragment()).commit();
+                        new ScheduleFragment()).commit();
+                break;
+            case R.id.nav_details:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new SportsDetailsFragment()).commit();
+                break;
+            case R.id.nav_register:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new UserTeamRegisterFragment()).commit();
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);

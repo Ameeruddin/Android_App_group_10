@@ -15,6 +15,7 @@ import com.google.android.material.tabs.TabLayout;
 public class LoginActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
+    ///Boolean isCaptain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,8 @@ public class LoginActivity extends AppCompatActivity {
         //creating objects for TabLayout and ViewPager
         tabLayout=(TabLayout)findViewById(R.id.tabLayout);
         viewPager=(ViewPager)findViewById(R.id.viewPager);
+
+        //isCaptain = getIntent().getBooleanExtra("isCaptain",false);
 
         //adding Tabs to TabLayout
         tabLayout.addTab(tabLayout.newTab().setText("Login"));

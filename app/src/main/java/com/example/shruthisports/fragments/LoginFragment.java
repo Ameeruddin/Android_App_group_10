@@ -45,6 +45,9 @@ public class LoginFragment extends Fragment {
     JSONObject data;
     Context mContext;
 
+    Boolean isCaptainCB;
+    SharedPreferences pref;
+
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -68,6 +71,17 @@ public class LoginFragment extends Fragment {
 
         //Intializing JSON object
         data = new JSONObject();
+
+        pref = getActivity().getSharedPreferences("captain",Context.MODE_PRIVATE);
+        if(pref.contains("isCaptainCB")) {
+            isCaptainCB = pref.getBoolean("isCaptainCB", false);
+            if (isCaptainCB) {
+                loginCaptainCB.setChecked(true);
+                SharedPreferences.Editor mEditor = pref.edit();
+                mEditor.putBoolean("isCaptainCB", false);
+                mEditor.commit();
+            }
+        }
 
         //setting onClickListener to login Button
         loginBtn.setOnClickListener(new View.OnClickListener() {
