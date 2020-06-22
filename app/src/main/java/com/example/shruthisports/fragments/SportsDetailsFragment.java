@@ -1,13 +1,11 @@
 package com.example.shruthisports.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.ListAdapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,13 +20,13 @@ import com.example.shruthisports.adapters.SportsAdapter;
 
 import java.util.ArrayList;
 
-public class SportsListFragment extends Fragment {
+public class SportsDetailsFragment extends Fragment {
 
     ListView listView;
     ArrayList<Sports> sportsList = new ArrayList<>();
     Context mContext;
 
-    public SportsListFragment() {
+    public SportsDetailsFragment() {
         // Required empty public constructor
     }
 
@@ -41,7 +39,7 @@ public class SportsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sports_list, container, false);
+        return inflater.inflate(R.layout.fragment_sports_details, container, false);
     }
 
     @Override
