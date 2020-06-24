@@ -10,12 +10,21 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select your sport"
+        android:text="Enter team details"
         android:textSize="30sp"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:layout_centerHorizontal="true"
         android:id="@+id/registerSportText"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/registerSportText"
+        android:layout_marginTop="30dp"
+        android:hint="   Team Name   "
+        android:layout_centerHorizontal="true"
+        android:id="@+id/teamNameET"/>
 
     <Spinner
         android:layout_margin="20dp"
@@ -24,12 +33,62 @@
         android:entries="@array/sports_array"
         android:id="@+id/sportsSpinner"
         android:layout_marginLeft="20dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/border_layout"
-        android:stateListAnimator="@drawable/spinner_sla"
         android:popupBackground="@android:color/white"
-        android:layout_below="@+id/registerSportText"
+        android:layout_below="@+id/teamNameET"
+        android:layout_centerHorizontal="true"
         tools:listitem="@layout/support_simple_spinner_dropdown_item"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"
+        android:id="@+id/sectionLL"
+        android:layout_below="@+id/sportsSpinner">
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/branchSpinner"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="15dp"
+            android:entries="@array/branches_array"
+            tools:listitem="@android:layout/simple_spinner_item"/>
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sectionSpinner"
+            android:layout_marginRight="-20dp"
+            android:entries="@array/sections_array"
+            tools:listitem="@android:layout/simple_spinner_item"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/sectionLL"
+        android:id="@+id/genderRB"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true">
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Men's"
+                android:layout_marginRight="30dp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Women's"/>
+        </RadioGroup>
+    </LinearLayout>
 
     <Button
         android:layout_width="wrap_content"
@@ -38,7 +97,7 @@
         android:padding="10dp"
         android:background="@drawable/rounded_background_primary"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/sportsSpinner"
+        android:layout_below="@+id/genderRB"
         android:id="@+id/teamRegisterBtn"
         android:textColor="#ffffff"/>
 </RelativeLayout>

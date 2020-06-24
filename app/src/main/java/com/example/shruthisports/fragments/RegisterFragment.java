@@ -98,23 +98,23 @@ public class RegisterFragment extends Fragment {
             String password = registerPasswordET.getText().toString();
             Long userPhone = Long.parseLong(registerPhoneET.getText().toString());
             String userMail = registerMailET.getText().toString();
-            String userYear = yearSpinner.getSelectedItem().toString();
+            Integer userYear = Integer.parseInt(yearSpinner.getSelectedItem().toString().substring(0,1));
             String userBranch = branchSpinner.getSelectedItem().toString();
             Integer userSection = Integer.parseInt(sectionSpinner.getSelectedItem().toString());
-            data.put("userId",userId);
-            data.put("userName",userName);
-            data.put("password",password);
-            data.put("userPhone",userPhone);
-            data.put("userMail",userMail);
-            data.put("userYear",userYear);
-            data.put("userBranch",userBranch);
-            data.put("userSection",userSection);
+            data.put("user_id",userId);
+            data.put("user_name",userName);
+            data.put("password_",password);
+            data.put("phone_num",userPhone);
+            data.put("email_id",userMail);
+            data.put("year_",userYear);
+            data.put("branch",userBranch);
+            data.put("section",userSection);
             if(checkDetails(userId, userName, userPhone, userMail, password)&&matchDetails(userId,userMail,userBranch)){
                 Toast.makeText(mContext,"successfully registered",Toast.LENGTH_LONG).show();
             }
-            String url="http://ec2-3-7-131-60.ap-south-1.compute.amazonaws.com/login";
+            String url="https://group-10-user-api.herokuapp.com/User_reg";
             queue = Volley.newRequestQueue(mContext);
-            objectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+            objectRequest = new JsonObjectRequest(Request.Method.GET, url, data,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -131,13 +131,13 @@ public class RegisterFragment extends Fragment {
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(mContext,"Something went wrong",Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext,error.toString(),Toast.LENGTH_LONG).show();
                     //Toast.makeText(mContext,"Please check your credentials and try again",Toast.LENGTH_LONG).show();
                 }
             });
             queue.add(objectRequest);
         }catch (Exception e){
-            Toast.makeText(mContext,"please check your details and try again",Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext,e.toString(),Toast.LENGTH_LONG).show();
         }
     }
 
@@ -158,7 +158,7 @@ public class RegisterFragment extends Fragment {
     }
 
     private Boolean checkDetails(Long userId, String userName, Long userPhone, String userMail, String password) {
-        if((userId/10000000)!=1601){
+        if((userId/100000000)!=1601){
             Toast.makeText(mContext,"enter valid user Id",Toast.LENGTH_LONG).show();
             return false;
         }else if(userName==""){

@@ -1,4 +1,4 @@
-package com.example.shruthisports;
+package com.example.shruthisports.classes;
 
 public class Sports {
 

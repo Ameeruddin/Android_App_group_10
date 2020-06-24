@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.shruthisports.R
-import com.example.shruthisports.Sports
+import com.example.shruthisports.classes.Sports
 
 class SportsAdapter(val mCtx: Context, val layoutResId: Int, val sportsList:MutableList<Sports>)
     : ArrayAdapter<Sports>(mCtx,layoutResId,sportsList) {

@@ -99,14 +99,14 @@ public class LoginFragment extends Fragment {
             String userId=loginIdET.getText().toString();
             String password=loginPasswordET.getText().toString();
             Boolean captain=loginCaptainCB.isChecked();
-            data.put("username",userId);
-            data.put("password",password);
+            data.put("user_name",userId);
+            data.put("password_",password);
         }catch(Exception e){
             Toast.makeText(mContext,"Please check your details",Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
 
-        String url="http://ec2-3-7-131-60.ap-south-1.compute.amazonaws.com/login";
+        String url="https://group-10-user-api.herokuapp.com/Userlogin";
         queue = Volley.newRequestQueue(mContext);
         objectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
                 new Response.Listener<JSONObject>() {
@@ -116,8 +116,7 @@ public class LoginFragment extends Fragment {
                         try {
                             accessTkn = response.getString("access_token");
                             if(keepLoggedInCB.isChecked()){
-                                SharedPreferences sharedPref = mContext.getSharedPreferences(
-                                        getString(R.string.user_id), Context.MODE_PRIVATE);
+                                SharedPreferences sharedPref = mContext.getSharedPreferences(getString(R.string.user_id), Context.MODE_PRIVATE);
                                 String uid = sharedPref.getString("user_id","");
                                 if(uid==""){
                                     Toast.makeText(mContext,"uid is empty",Toast.LENGTH_LONG).show();
@@ -142,17 +141,11 @@ public class LoginFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 loginIdET.setText("");
                 loginPasswordET.setText("");
-                Toast.makeText(mContext,error.toString(),Toast.LENGTH_LONG).show();
-                //Toast.makeText(mContext,"Please check your credentials and try again",Toast.LENGTH_LONG).show();
+                //Toast.makeText(mContext,error.toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext,"Please check your credentials and try again",Toast.LENGTH_LONG).show();
             }
         });
         queue.add(objectRequest);
-        //remove later
-        Intent intent = new Intent(mContext, MainActivity.class);
-        if(loginCaptainCB.isChecked()){
-            intent = new Intent(mContext, CaptainActivity.class);
-        }
-        startActivity(intent);
         return true;
     }
 

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <Button
+    <!--<Button
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_margin="25dp"
@@ -37,5 +37,5 @@
         android:text="User Profile"
         android:background="@android:color/holo_orange_light"/>
 
-
+-->
 </LinearLayout>
