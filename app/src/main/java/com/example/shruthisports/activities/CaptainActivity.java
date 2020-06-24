@@ -13,6 +13,11 @@ import android.view.MenuItem;
 import com.example.shruthisports.fragments.CaptainRegisterTeamFragment;
 import com.example.shruthisports.fragments.HomeFragment;
 import com.example.shruthisports.R;
+import com.example.shruthisports.fragments.LogoutFragment;
+import com.example.shruthisports.fragments.ProfileFragment;
+import com.example.shruthisports.fragments.ScheduleFragment;
+import com.example.shruthisports.fragments.SportsDetailsFragment;
+import com.example.shruthisports.fragments.UserTeamRegisterFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class CaptainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -53,6 +58,14 @@ public class CaptainActivity extends AppCompatActivity implements NavigationView
             case R.id.captain_nav_register:
                 getSupportFragmentManager().beginTransaction().replace(R.id.captain_fragment_container,
                         new CaptainRegisterTeamFragment()).commit();
+                break;
+            case R.id.captain_nav_profile:
+                getSupportFragmentManager().beginTransaction().replace(R.id.captain_fragment_container,
+                        new ProfileFragment()).commit();
+                break;
+            case R.id.captain_nav_logout:
+                getSupportFragmentManager().beginTransaction().replace(R.id.captain_fragment_container,
+                        new LogoutFragment()).commit();
                 break;
         }
         captainDrawerLayout.closeDrawer(GravityCompat.START);

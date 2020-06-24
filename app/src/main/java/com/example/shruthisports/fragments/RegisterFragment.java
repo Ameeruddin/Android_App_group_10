@@ -3,11 +3,6 @@ package com.example.shruthisports.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +11,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,7 +22,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.shruthisports.R;
+import com.example.shruthisports.SendMail;
 import com.example.shruthisports.activities.LoginActivity;
+import com.example.shruthisports.activities.OTPVerification;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -92,13 +93,15 @@ public class RegisterFragment extends Fragment {
     }
 
     private void register() {
+        OTPVerification otpVerification = new OTPVerification(mContext);
+        otpVerification.show();
         try {
             Long userId = Long.parseLong(registerIdET.getText().toString());
             String userName = registerNameET.getText().toString();
             String password = registerPasswordET.getText().toString();
             Long userPhone = Long.parseLong(registerPhoneET.getText().toString());
             String userMail = registerMailET.getText().toString();
-            Integer userYear = Integer.parseInt(yearSpinner.getSelectedItem().toString().substring(0,1));
+            Integer userYear = (int)(yearSpinner.getSelectedItem().toString().charAt(0)-'0');
             String userBranch = branchSpinner.getSelectedItem().toString();
             Integer userSection = Integer.parseInt(sectionSpinner.getSelectedItem().toString());
             data.put("user_id",userId);
@@ -110,11 +113,23 @@ public class RegisterFragment extends Fragment {
             data.put("branch",userBranch);
             data.put("section",userSection);
             if(checkDetails(userId, userName, userPhone, userMail, password)&&matchDetails(userId,userMail,userBranch)){
+                //sending email
+                String email = userMail;//"kvnsairaamreddy@gmail.com";
+                String subject = "OTP for shruthi sports";
+                String message = "Your OTP for registration is : 000000";
+                SendMail sm = new SendMail(mContext, email, subject, message);
+                sm.execute();
+
+//                OTPVerification otpVerification = new OTPVerification(mContext);
+//                otpVerification.show();
+
                 Toast.makeText(mContext,"successfully registered",Toast.LENGTH_LONG).show();
             }
+
+
             String url="https://group-10-user-api.herokuapp.com/User_reg";
             queue = Volley.newRequestQueue(mContext);
-            objectRequest = new JsonObjectRequest(Request.Method.GET, url, data,
+            objectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
@@ -131,13 +146,13 @@ public class RegisterFragment extends Fragment {
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(mContext,error.toString(),Toast.LENGTH_LONG).show();
-                    //Toast.makeText(mContext,"Please check your credentials and try again",Toast.LENGTH_LONG).show();
+//                    Toast.makeText(mContext,error.toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext,"Please check your credentials and try again",Toast.LENGTH_LONG).show();
                 }
             });
             queue.add(objectRequest);
         }catch (Exception e){
-            Toast.makeText(mContext,e.toString(),Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext,"Please enter valid details",Toast.LENGTH_LONG).show();
         }
     }
 
