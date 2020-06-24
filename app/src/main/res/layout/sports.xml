@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/sportName"
         android:text="Sport name"
-        android:textSize="36sp"
+        android:textSize="31sp"
         android:textStyle="bold"/>
     <TextView
         android:layout_width="match_parent"

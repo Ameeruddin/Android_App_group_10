@@ -5,10 +5,10 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string-array name="sports_array">
+        <item>FootBall</item>
         <item>Badminton</item>
         <item>BasketBall</item>
         <item>Cricket</item>
-        <item>FootBall</item>
         <item>Kabatti</item>
         <item>TableTennis</item>
         <item>ThrowBall</item>

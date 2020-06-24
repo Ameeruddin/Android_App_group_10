@@ -1,13 +1,11 @@
-package com.example.shruthisports.fragments;
+package com.example.shruthisports;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.ListAdapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.shruthisports.R;
-import com.example.shruthisports.Sports;
+import com.example.shruthisports.classes.Sports;
 import com.example.shruthisports.adapters.SportsAdapter;
 
 import java.util.ArrayList;

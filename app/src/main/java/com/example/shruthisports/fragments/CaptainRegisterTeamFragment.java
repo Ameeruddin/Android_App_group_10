@@ -16,8 +16,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.example.shruthisports.R;
-
-import java.lang.reflect.Array;
+import com.example.shruthisports.activities.RegisterTeamActivity;
 
 public class CaptainRegisterTeamFragment extends Fragment {
 
@@ -48,7 +47,7 @@ public class CaptainRegisterTeamFragment extends Fragment {
         sportsSpinner = view.findViewById(R.id.sportsSpinner);
         registerTeamBtn = view.findViewById(R.id.teamRegisterBtn);
 
-        ArrayAdapter adapter = new ArrayAdapter<>(mContext, R.layout.spinner_item_selected, sportsArray);
+        ArrayAdapter adapter = new ArrayAdapter<>(mContext, R.layout.support_simple_spinner_dropdown_item, sportsArray);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         sportsSpinner.setAdapter(adapter);
 
@@ -61,7 +60,7 @@ public class CaptainRegisterTeamFragment extends Fragment {
     }
 
     private void openregistration() {
-        Intent intent = new Intent(mContext,RegisterTeamActivity.class);
+        Intent intent = new Intent(mContext, RegisterTeamActivity.class);
         startActivity(intent);
     }
 

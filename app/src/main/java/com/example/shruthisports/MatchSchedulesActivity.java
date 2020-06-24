@@ -1,55 +1,26 @@
-package com.example.shruthisports.fragments;
+package com.example.shruthisports;
 
-import android.content.Context;
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
+import android.os.Bundle;
 
-import com.example.shruthisports.R;
-import com.example.shruthisports.classes.SportsListDetails;
 import com.example.shruthisports.adapters.SportsListDetailsAdapter;
+import com.example.shruthisports.classes.SportsListDetails;
 import com.example.shruthisports.classes.SportsListHeading;
-import com.example.shruthisports.classes.Sports;
 
 import java.util.ArrayList;
 
-public class SportsDetailsFragment extends Fragment {
-
-    ListView listView;
-    ArrayList<Sports> sportsList = new ArrayList<>();
-    Context mContext;
-
-    public SportsDetailsFragment() {
-        // Required empty public constructor
-    }
+public class MatchSchedulesActivity extends AppCompatActivity {
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mContext=context;
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_match_schedules);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sports_details, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        RecyclerView matchDetailsRecyclerView = view.findViewById(R.id.MatchDetailsRecyclerView);
-        matchDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        RecyclerView matchDetailsRecyclerView = findViewById(R.id.MatchDetailsRecyclerView);
+        matchDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         ArrayList<SportsListHeading> scheduledSports = new ArrayList<>();
 
@@ -73,5 +44,6 @@ public class SportsDetailsFragment extends Fragment {
 
         SportsListDetailsAdapter adapter = new SportsListDetailsAdapter(scheduledSports);
         matchDetailsRecyclerView.setAdapter(adapter);
+
     }
 }

@@ -1,4 +1,4 @@
-package com.example.shruthisports.fragments;
+package com.example.shruthisports.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
