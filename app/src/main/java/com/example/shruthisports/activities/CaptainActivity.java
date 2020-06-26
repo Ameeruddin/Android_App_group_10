@@ -14,7 +14,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.shruthisports.CaptainMatchFragment;
 import com.example.shruthisports.R;
 import com.example.shruthisports.fragments.CaptainRegisterTeamFragment;
-import com.example.shruthisports.fragments.HomeFragment;
 import com.example.shruthisports.fragments.LogoutFragment;
 import com.example.shruthisports.fragments.ProfileFragment;
 import com.google.android.material.navigation.NavigationView;
@@ -43,7 +42,7 @@ public class CaptainActivity extends AppCompatActivity implements NavigationView
 
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.captain_fragment_container,
-                    new HomeFragment()).commit();
+                    new CaptainMatchFragment()).commit();
             captainNavigationView.setCheckedItem(R.id.captain_nav_home);
         }
     }
@@ -56,7 +55,7 @@ public class CaptainActivity extends AppCompatActivity implements NavigationView
             return;
         }else{
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new HomeFragment()).commit();
+                    new CaptainMatchFragment()).commit();
             captainNavigationView.setCheckedItem(R.id.nav_home);
         }
     }
@@ -66,7 +65,7 @@ public class CaptainActivity extends AppCompatActivity implements NavigationView
         switch(item.getItemId()){
             case R.id.captain_nav_home:
                 getSupportFragmentManager().beginTransaction().replace(R.id.captain_fragment_container,
-                        new HomeFragment()).commit();
+                        new CaptainMatchFragment()).commit();
                 break;
             case R.id.captain_nav_register:
                 getSupportFragmentManager().beginTransaction().replace(R.id.captain_fragment_container,

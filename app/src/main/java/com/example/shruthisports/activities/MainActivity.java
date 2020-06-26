@@ -1,5 +1,10 @@
 package com.example.shruthisports.activities;
 
+import android.os.Build;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -8,12 +13,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.os.Build;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import com.example.shruthisports.fragments.HomeFragment;
 import com.example.shruthisports.R;
 import com.example.shruthisports.fragments.LogoutFragment;
 import com.example.shruthisports.fragments.ProfileFragment;
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new HomeFragment()).commit();
+                    new ScheduleFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
         }
     }
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return;
         }else{
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new HomeFragment()).commit();
+                    new ScheduleFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
         }
     }
@@ -70,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch(item.getItemId()){
             case R.id.nav_home:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new HomeFragment()).commit();
+                        new ScheduleFragment()).commit();
                 break;
             case R.id.nav_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

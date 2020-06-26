@@ -2,7 +2,6 @@ package com.example.shruthisports.activities;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,8 +13,19 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.shruthisports.R;
 import com.example.shruthisports.fragments.RegisterFragment;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import static com.example.shruthisports.fragments.RegisterFragment.register_data;
 
 public class OTPVerification extends Dialog implements TextWatcher {
 
@@ -26,6 +36,8 @@ public class OTPVerification extends Dialog implements TextWatcher {
     Button otp_submit;
     TextView otpDialopTextView;
     String OTP = RegisterFragment.OTP;
+    private RequestQueue queue;
+    JsonObjectRequest objectRequest;
     public static boolean Verified = false;
 
     public OTPVerification(@NonNull Context context) {
@@ -38,7 +50,7 @@ public class OTPVerification extends Dialog implements TextWatcher {
         setContentView(R.layout.otp_verify);
 
         otpDialopTextView = findViewById(R.id.otp_dialog_textView);
-        otpDialopTextView.setText(OTP);
+        otpDialopTextView.setText("Enter OTP:"+OTP);
         otp_submit = findViewById(R.id.otp_submit);
         editText_one = findViewById(R.id.editTextone);
         editText_two = findViewById(R.id.editTexttwo);
@@ -96,7 +108,30 @@ public class OTPVerification extends Dialog implements TextWatcher {
         if(OTP.equals(userOTP)){
             Verified = true;
             Toast.makeText(getContext(),"OTP verified",Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(getContext(),RegisterFragment.class);
+            String url="https://group-10-user-api.herokuapp.com/User_reg";
+            queue = Volley.newRequestQueue(getContext());
+            objectRequest = new JsonObjectRequest(Request.Method.POST, url, register_data,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            String accessTkn = null;
+                            try {
+                                accessTkn = response.getString("access_token");
+                                Toast.makeText(getContext(),"Registration Successful",Toast.LENGTH_LONG).show();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+//                    Toast.makeText(mContext,error.toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"Verification failed try again",Toast.LENGTH_LONG).show();
+                }
+            });
+            queue.add(objectRequest);
+            Toast.makeText(getContext(),"registered successfully",Toast.LENGTH_LONG).show();
+            this.dismiss();
         }else{
             Toast.makeText(getContext(),"Wrong OTP please try again later",Toast.LENGTH_LONG).show();
         }
