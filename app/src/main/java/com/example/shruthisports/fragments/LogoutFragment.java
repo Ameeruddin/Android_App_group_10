@@ -2,16 +2,16 @@ package com.example.shruthisports.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.example.shruthisports.R;
 import com.example.shruthisports.activities.LoginActivity;
@@ -19,6 +19,7 @@ import com.example.shruthisports.activities.LoginActivity;
 public class LogoutFragment extends Fragment {
 
     Context mContext;
+    SharedPreferences userPref;
 
     public LogoutFragment() {
         // Required empty public constructor
@@ -38,6 +39,13 @@ public class LogoutFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        userPref = getActivity().getSharedPreferences("user",Context.MODE_PRIVATE);
+        SharedPreferences.Editor uEditor = userPref.edit();
+        uEditor.putBoolean("keepLoggedIn", false);
+        uEditor.putString("userId","");
+        uEditor.putString("password","");
+        uEditor.commit();
 
         new Handler().postDelayed(new Runnable() {
             @Override

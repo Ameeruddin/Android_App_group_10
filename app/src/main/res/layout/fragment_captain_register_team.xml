@@ -17,24 +17,15 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/registerSportText"/>
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/registerSportText"
-        android:layout_marginTop="30dp"
-        android:hint="   Team Name   "
-        android:layout_centerHorizontal="true"
-        android:id="@+id/teamNameET"/>
-
     <Spinner
-        android:layout_margin="20dp"
+        android:layout_marginTop="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:entries="@array/sports_array"
         android:id="@+id/sportsSpinner"
         android:layout_marginLeft="20dp"
         android:popupBackground="@android:color/white"
-        android:layout_below="@+id/teamNameET"
+        android:layout_below="@+id/registerSportText"
         android:layout_centerHorizontal="true"
         tools:listitem="@layout/support_simple_spinner_dropdown_item"/>
 

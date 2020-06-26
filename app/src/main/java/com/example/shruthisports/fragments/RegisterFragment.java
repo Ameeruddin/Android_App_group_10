@@ -1,7 +1,6 @@
 package com.example.shruthisports.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,19 +14,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.shruthisports.R;
 import com.example.shruthisports.SendMail;
-import com.example.shruthisports.activities.LoginActivity;
 import com.example.shruthisports.activities.OTPVerification;
 
-import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Random;
 
 public class RegisterFragment extends Fragment {
 
@@ -45,8 +40,10 @@ public class RegisterFragment extends Fragment {
     //creating objects required to interact with REST api
     private RequestQueue queue;
     JsonObjectRequest objectRequest;
-    JSONObject data;
+    public static JSONObject register_data;
     Context mContext;
+
+    public static String OTP="1234";
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -68,7 +65,7 @@ public class RegisterFragment extends Fragment {
         registerBtn = view.findViewById(R.id.registerBtn);
 
         //Intializing JSON object
-        data = new JSONObject();
+        register_data = new JSONObject();
 
         //setting onClickListener to login Button
         registerBtn.setOnClickListener(new View.OnClickListener() {
@@ -86,15 +83,12 @@ public class RegisterFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_register, container, false);
     }
 
     private void register() {
-        OTPVerification otpVerification = new OTPVerification(mContext);
-        otpVerification.show();
         try {
             Long userId = Long.parseLong(registerIdET.getText().toString());
             String userName = registerNameET.getText().toString();
@@ -104,53 +98,23 @@ public class RegisterFragment extends Fragment {
             Integer userYear = (int)(yearSpinner.getSelectedItem().toString().charAt(0)-'0');
             String userBranch = branchSpinner.getSelectedItem().toString();
             Integer userSection = Integer.parseInt(sectionSpinner.getSelectedItem().toString());
-            data.put("user_id",userId);
-            data.put("user_name",userName);
-            data.put("password_",password);
-            data.put("phone_num",userPhone);
-            data.put("email_id",userMail);
-            data.put("year_",userYear);
-            data.put("branch",userBranch);
-            data.put("section",userSection);
+            register_data.put("user_id",userId);
+            register_data.put("user_name",userName);
+            register_data.put("password_",password);
+            register_data.put("phone_num",userPhone);
+            register_data.put("email_id",userMail);
+            register_data.put("year_",userYear);
+            register_data.put("branch",userBranch);
+            register_data.put("section",userSection);
+            registerIdET.setText("");
+            registerNameET.setText("");
+            registerPasswordET.setText("");
+            registerPhoneET.setText("");
+            registerMailET.setText("");
+
             if(checkDetails(userId, userName, userPhone, userMail, password)&&matchDetails(userId,userMail,userBranch)){
-                //sending email
-                String email = userMail;//"kvnsairaamreddy@gmail.com";
-                String subject = "OTP for shruthi sports";
-                String message = "Your OTP for registration is : 000000";
-                SendMail sm = new SendMail(mContext, email, subject, message);
-                sm.execute();
-
-//                OTPVerification otpVerification = new OTPVerification(mContext);
-//                otpVerification.show();
-
-                Toast.makeText(mContext,"successfully registered",Toast.LENGTH_LONG).show();
+                OTPVerify(userMail);
             }
-
-
-            String url="https://group-10-user-api.herokuapp.com/User_reg";
-            queue = Volley.newRequestQueue(mContext);
-            objectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            String accessTkn = null;
-                            try {
-                                accessTkn = response.getString("access_token");
-                                Toast.makeText(mContext,"Registration Successful",Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(mContext, LoginActivity.class);
-                                startActivity(intent);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-//                    Toast.makeText(mContext,error.toString(),Toast.LENGTH_LONG).show();
-                    Toast.makeText(mContext,"Please check your credentials and try again",Toast.LENGTH_LONG).show();
-                }
-            });
-            queue.add(objectRequest);
         }catch (Exception e){
             Toast.makeText(mContext,"Please enter valid details",Toast.LENGTH_LONG).show();
         }
@@ -172,7 +136,7 @@ public class RegisterFragment extends Fragment {
         }
     }
 
-    private Boolean checkDetails(Long userId, String userName, Long userPhone, String userMail, String password) {
+    private boolean checkDetails(Long userId, String userName, Long userPhone, String userMail, String password) {
         if((userId/100000000)!=1601){
             Toast.makeText(mContext,"enter valid user Id",Toast.LENGTH_LONG).show();
             return false;
@@ -191,5 +155,31 @@ public class RegisterFragment extends Fragment {
         }else {
             return true;
         }
+    }
+
+    public boolean OTPVerify(String userMail){
+        //generating OTP
+        String numbers = "0123456789";
+        char[] otp = new char[4];
+        Random rndm_method = new Random();
+        for (int i = 0; i < 4; i++) {
+            otp[i] = numbers.charAt(rndm_method.nextInt(numbers.length()));
+        }
+        OTP = new String(otp);
+
+        //sending email
+        String email = userMail;
+        String subject = "OTP for Shruthi Sports";
+        String message = "Your OTP for registration is : "+OTP;
+        SendMail sm = new SendMail(mContext, email, subject, message);
+        sm.execute();
+
+        OTPVerification otpVerification = new OTPVerification(mContext);
+        otpVerification.show();
+
+        if(OTPVerification.Verified){
+            return true;
+        }
+        return false;
     }
 }

@@ -1,32 +1,47 @@
 package com.example.shruthisports.fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.shruthisports.R;
-import com.example.shruthisports.classes.SportsListDetails;
-import com.example.shruthisports.adapters.SportsListDetailsAdapter;
 import com.example.shruthisports.classes.SportsListHeading;
-import com.example.shruthisports.classes.Sports;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SportsDetailsFragment extends Fragment {
 
     ListView listView;
-    ArrayList<Sports> sportsList = new ArrayList<>();
+    ArrayList<SportsListHeading> scheduledSports;
     Context mContext;
+    SharedPreferences userPref;
+
+    //creating objects required to interact with REST api
+    static String accessTkn;
+    private RequestQueue queue;
+    JsonArrayRequest arrayRequest;
+    JSONArray data;
 
     public SportsDetailsFragment() {
         // Required empty public constructor
@@ -48,30 +63,44 @@ public class SportsDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView matchDetailsRecyclerView = view.findViewById(R.id.MatchDetailsRecyclerView);
-        matchDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        userPref = getActivity().getSharedPreferences("user",Context.MODE_PRIVATE);
+        accessTkn = userPref.getString("access_token","");
 
-        ArrayList<SportsListHeading> scheduledSports = new ArrayList<>();
+        String url = "https://group-10-user-api.herokuapp.com/sportdetails";
+        queue = Volley.newRequestQueue(mContext);
+        data = new JSONArray();
 
-        ArrayList<SportsListDetails> footballDetails = new ArrayList<>();
-        footballDetails.add(new SportsListDetails("abc"));
-        footballDetails.add(new SportsListDetails("def"));
-        SportsListHeading football = new SportsListHeading("Football",footballDetails);
-        scheduledSports.add(football);
+        try {
+            //data.put(new String[]{"sport_name", "cricket"});
+        }catch (Exception e){
+            Toast.makeText(mContext, "error 1",Toast.LENGTH_LONG).show();
+        }
+        arrayRequest = new JsonArrayRequest(Request.Method.GET, url, data,
+                new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                try {
+                    Toast.makeText(mContext, response.getJSONObject(1).toString(),Toast.LENGTH_LONG).show();
+//                    String k = response.getString("gender");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-        ArrayList<SportsListDetails> cricketDetails = new ArrayList<>();
-        cricketDetails.add(new SportsListDetails("ghi"));
-        cricketDetails.add(new SportsListDetails("jkl"));
-        SportsListHeading cricket = new SportsListHeading("Cricket",cricketDetails);
-        scheduledSports.add(cricket);
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
-        ArrayList<SportsListDetails> basketballDetails = new ArrayList<>();
-        basketballDetails.add(new SportsListDetails("mno"));
-        basketballDetails.add(new SportsListDetails("pqr"));
-        SportsListHeading basketball = new SportsListHeading("basketball",basketballDetails);
-        scheduledSports.add(basketball);
-
-        SportsListDetailsAdapter adapter = new SportsListDetailsAdapter(scheduledSports);
-        matchDetailsRecyclerView.setAdapter(adapter);
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer "+accessTkn);
+                return params;
+            }
+        };
+        queue.add(arrayRequest);
     }
 }

@@ -20,7 +20,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/loginIdET"
                 android:layout_marginBottom="20dp"
-                android:hint="User Id"/>
+                android:hint="User Id"
+                android:drawablePadding="12dp"
+                android:drawableLeft="@drawable/ic_profile" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -29,6 +31,8 @@
                 android:layout_below="@+id/loginIdET"
                 android:id="@+id/loginPasswordET"
                 android:layout_marginBottom="20dp"
+                android:drawableLeft="@drawable/ic_key"
+                android:drawablePadding="12dp"
                 android:hint="Password"/>
 
             <CheckBox
