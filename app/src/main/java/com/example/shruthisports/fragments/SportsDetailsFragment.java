@@ -2,6 +2,7 @@ package com.example.shruthisports.fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -21,10 +25,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.shruthisports.R;
+import com.example.shruthisports.adapters.SportsListDetailsAdapter;
+import com.example.shruthisports.classes.Sports;
+import com.example.shruthisports.classes.SportsListDetails;
 import com.example.shruthisports.classes.SportsListHeading;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,15 +41,16 @@ import java.util.Map;
 public class SportsDetailsFragment extends Fragment {
 
     ListView listView;
+    ArrayList<Sports> sportsList = new ArrayList<>();
+    ArrayList<String> sportNames = new ArrayList<>();
     ArrayList<SportsListHeading> scheduledSports;
     Context mContext;
     SharedPreferences userPref;
 
     //creating objects required to interact with REST api
-    static String accessTkn;
     private RequestQueue queue;
     JsonArrayRequest arrayRequest;
-    JSONArray data;
+    JSONObject data;
 
     public SportsDetailsFragment() {
         // Required empty public constructor
@@ -63,44 +72,87 @@ public class SportsDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        RecyclerView matchDetailsRecyclerView = view.findViewById(R.id.MatchDetailsRecyclerView);
+        matchDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+
+        scheduledSports = new ArrayList<>();
+
         userPref = getActivity().getSharedPreferences("user",Context.MODE_PRIVATE);
-        accessTkn = userPref.getString("access_token","");
+        final String accessTkn = userPref.getString("access_token","");
 
-        String url = "https://group-10-user-api.herokuapp.com/sportdetails";
+        String url = "https://group-10-user-api.herokuapp.com/sportdetails?sport_name=carroms";
+
         queue = Volley.newRequestQueue(mContext);
-        data = new JSONArray();
-
-        try {
-            //data.put(new String[]{"sport_name", "cricket"});
-        }catch (Exception e){
-            Toast.makeText(mContext, "error 1",Toast.LENGTH_LONG).show();
-        }
-        arrayRequest = new JsonArrayRequest(Request.Method.GET, url, data,
+        arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                try {
-                    Toast.makeText(mContext, response.getJSONObject(1).toString(),Toast.LENGTH_LONG).show();
-//                    String k = response.getString("gender");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        },
-                new Response.ErrorListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                     @Override
-                    public void onErrorResponse(VolleyError error) {
+                    public void onResponse(JSONArray response) {
+                        try {
 
+
+
+                                JSONObject sport = response.getJSONObject(0);
+
+                                String sportName = sport.getString("sport_name");
+                                String sportCategory = sport.getString("sport_category");
+                                Integer minTeamSize = sport.getInt("mini_team_size");
+                                Integer maxTeamSize = sport.getInt("max_team_size");
+                                String gender = sport.getString("gender");
+                                String startDate = sport.getString("start_date");
+                                String endDate = sport.getString("end_date");
+                                Toast.makeText(mContext, "HI"+sportName+sportCategory, Toast.LENGTH_SHORT).show();
+                                ArrayList<SportsListDetails> details = new ArrayList<>();
+                                if (sportCategory != null) {
+                                    if (gender != null) {
+                                        details.add(new SportsListDetails("Category: " + sportCategory + " (" + gender + ")"));
+                                    } else {
+                                        details.add(new SportsListDetails("Category: " + sportCategory));
+                                    }
+                                }
+                                if (minTeamSize != null && maxTeamSize != null) {
+                                    details.add(new SportsListDetails("Team Size: " + minTeamSize + "-" + maxTeamSize));
+                                }
+                                if (startDate != null) {
+                                    details.add(new SportsListDetails("Start Date: " + startDate));
+                                }
+                                if (endDate != null) {
+                                    details.add(new SportsListDetails("End Date: " + endDate));
+                                }
+                                details.add(new SportsListDetails("Hello"));
+                                SportsListHeading sportsListHeading = new SportsListHeading(sportName, details);
+                                scheduledSports.add(sportsListHeading);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }) {
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(mContext, error.toString()+accessTkn, Toast.LENGTH_LONG).show();
+            }
+        })
+
+        {
+
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("Authorization", "Bearer "+accessTkn);
+                params.put("Authorization","Bearer "+accessTkn);
                 return params;
             }
         };
         queue.add(arrayRequest);
+        //remove later
+        ArrayList<SportsListDetails> basketballDetails = new ArrayList<>();
+        basketballDetails.add(new SportsListDetails("mno"));
+        basketballDetails.add(new SportsListDetails("pqr"));
+        SportsListHeading basketball = new SportsListHeading("basketball",basketballDetails);
+        scheduledSports.add(basketball);
+
+        SportsListDetailsAdapter adapter = new SportsListDetailsAdapter(scheduledSports);
+        matchDetailsRecyclerView.setAdapter(adapter);
     }
 }
