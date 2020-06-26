@@ -135,7 +135,7 @@ public class SportsDetailsFragment extends Fragment {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> params = new HashMap<String, String>();
-                    params.put("Authorization","Bearer"+accessTkn);
+                    params.put("Authorization","Bearer "+accessTkn);
                     return params;
                 }
             };

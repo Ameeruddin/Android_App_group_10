@@ -4,11 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +11,10 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -47,6 +46,7 @@ public class LoginFragment extends Fragment {
 
     Boolean isCaptainCB;
     SharedPreferences pref;
+    SharedPreferences userPref;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -69,9 +69,6 @@ public class LoginFragment extends Fragment {
         loginBtn = view.findViewById(R.id.loginBtn);
         keepLoggedInCB = view.findViewById(R.id.keepLoggedInCB);
 
-        //Intializing JSON object
-        data = new JSONObject();
-
         pref = getActivity().getSharedPreferences("captain",Context.MODE_PRIVATE);
         if(pref.contains("isCaptainCB")) {
             isCaptainCB = pref.getBoolean("isCaptainCB", false);
@@ -83,13 +80,33 @@ public class LoginFragment extends Fragment {
             }
         }
 
-        //setting onClickListener to login Button
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Boolean valid = isValid();
+        userPref = getActivity().getSharedPreferences("user",Context.MODE_PRIVATE);
+        if(!userPref.getBoolean("keepLoggedIn",true)&&(userPref.getString("password","").equals(""))){
+
+            //Intializing JSON object
+            data = new JSONObject();
+
+            //setting onClickListener to login Button
+            loginBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Boolean valid = isValid();
+                    if((!loginIdET.getText().toString().equals(""))&&keepLoggedInCB.isChecked()){
+                        SharedPreferences.Editor uEditor = userPref.edit();
+                        uEditor.putBoolean("keepLoggedIn", true);
+                        uEditor.putString("userId",loginIdET.getText().toString());
+                        uEditor.putString("password",loginPasswordET.getText().toString());
+                        uEditor.commit();
+                    }
+                }
+            });
+        }else{
+            Intent intent = new Intent(mContext,MainActivity.class);
+            if(loginCaptainCB.isChecked()){
+                intent = new Intent(mContext, CaptainActivity.class);
             }
-        });
+            startActivity(intent);
+        }
     }
 
     //function to validate the details given by the user
@@ -113,20 +130,12 @@ public class LoginFragment extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         String accessTkn = null;
+                        SharedPreferences.Editor uEditor = userPref.edit();
                         try {
                             accessTkn = response.getString("access_token");
-                            if(keepLoggedInCB.isChecked()){
-                                SharedPreferences sharedPref = mContext.getSharedPreferences(getString(R.string.user_id), Context.MODE_PRIVATE);
-                                String uid = sharedPref.getString("user_id","");
-                                if(uid==""){
-                                    Toast.makeText(mContext,"uid is empty",Toast.LENGTH_LONG).show();
-                                    SharedPreferences.Editor editor = sharedPref.edit();
-                                    editor.putLong(getString(R.string.user_id), Long.parseLong(loginIdET.getText().toString()));
-                                    editor.commit();
-                                }else{
-                                    Toast.makeText(mContext,uid,Toast.LENGTH_LONG).show();
-                                }
-                            }
+                            uEditor.putString("access_token",accessTkn);
+                            uEditor.commit();
+                            Toast.makeText(mContext,"access"+accessTkn,Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(mContext, MainActivity.class);
                             if(loginCaptainCB.isChecked()){
                                 intent = new Intent(mContext, CaptainActivity.class);
@@ -141,7 +150,6 @@ public class LoginFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 loginIdET.setText("");
                 loginPasswordET.setText("");
-                //Toast.makeText(mContext,error.toString(),Toast.LENGTH_LONG).show();
                 Toast.makeText(mContext,"Please check your credentials and try again",Toast.LENGTH_LONG).show();
             }
         });

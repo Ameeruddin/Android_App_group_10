@@ -18,6 +18,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/registerIdET"
                 android:layout_marginBottom="20dp"
+                android:drawableLeft="@drawable/ic_profile"
+                android:drawablePadding="12dp"
                 android:hint="User Id"/>
 
             <EditText
@@ -26,6 +28,8 @@
                 android:id="@+id/registerNameET"
                 android:layout_below="@+id/registerIdET"
                 android:layout_marginBottom="20dp"
+                android:drawableLeft="@drawable/ic_profile"
+                android:drawablePadding="12dp"
                 android:hint="Name"/>
 
             <EditText
@@ -34,6 +38,8 @@
                 android:id="@+id/registerPhoneET"
                 android:layout_marginBottom="20dp"
                 android:layout_below="@+id/registerNameET"
+                android:drawablePadding="12dp"
+                android:drawableLeft="@drawable/ic_phone"
                 android:hint="Phone"/>
 
             <EditText
@@ -43,6 +49,8 @@
                 android:layout_marginBottom="20dp"
                 android:layout_below="@+id/registerPhoneET"
                 android:singleLine="true"
+                android:drawableLeft="@drawable/ic_mail"
+                android:drawablePadding="12dp"
                 android:hint="College Mail"/>
 
             <EditText
@@ -51,6 +59,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/registerMailET"
                 android:id="@+id/registerPasswordET"
+                android:drawablePadding="12dp"
+                android:drawableLeft="@drawable/ic_key"
                 android:layout_marginBottom="20dp"
                 android:hint="Password"/>
 

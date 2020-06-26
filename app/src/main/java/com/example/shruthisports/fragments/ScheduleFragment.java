@@ -54,7 +54,6 @@ public class ScheduleFragment extends Fragment {
         sportsList.add(new Sports((long) 8,"Volleyball","Outdoor",6,10));
         sportsList.add(new Sports((long) 9,"Chess","Indoor",4,6));
         sportsList.add(new Sports((long) 10,"Caroms","Indoor",4,6));
-        sportsList.add(new Sports((long) 11,"Football","Outdoor",11,15));
 
         listView = view.findViewById(R.id.listView);
         if(sportsList.isEmpty()){
