@@ -94,7 +94,7 @@ public class LoginFragment extends Fragment {
                     if((!loginIdET.getText().toString().equals(""))&&keepLoggedInCB.isChecked()){
                         SharedPreferences.Editor uEditor = userPref.edit();
                         uEditor.putBoolean("keepLoggedIn", true);
-                        uEditor.putString("userId",loginIdET.getText().toString());
+                        uEditor.putLong("userId",Long.parseLong(loginIdET.getText().toString()));
                         uEditor.putString("password",loginPasswordET.getText().toString());
                         uEditor.commit();
                     }
@@ -116,7 +116,7 @@ public class LoginFragment extends Fragment {
             String userId=loginIdET.getText().toString();
             String password=loginPasswordET.getText().toString();
             Boolean captain=loginCaptainCB.isChecked();
-            data.put("user_name",userId);
+            data.put("user_id",userId);
             data.put("password_",password);
         }catch(Exception e){
             Toast.makeText(mContext,"Please check your details",Toast.LENGTH_LONG).show();
@@ -135,7 +135,7 @@ public class LoginFragment extends Fragment {
                             accessTkn = response.getString("access_token");
                             uEditor.putString("access_token",accessTkn);
                             uEditor.commit();
-                            Toast.makeText(mContext,"access"+accessTkn,Toast.LENGTH_LONG).show();
+                            //Toast.makeText(mContext,"access"+accessTkn,Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(mContext, MainActivity.class);
                             if(loginCaptainCB.isChecked()){
                                 intent = new Intent(mContext, CaptainActivity.class);

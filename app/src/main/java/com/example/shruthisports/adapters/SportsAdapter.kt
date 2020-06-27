@@ -19,9 +19,9 @@ class SportsAdapter(val mCtx: Context, val layoutResId: Int, val sportsList:Muta
         val sportsCategory=view.findViewById<TextView>(R.id.sportCategory)
         val sportItem = sportsList[position]
 
-        sportsName.text=sportItem.sportName.toString()
+        sportsName.text=sportItem.sport_name.toString()
         sportsName.isSingleLine=true
-        sportsCategory.text="Category: "+sportItem.sportCategory
+        sportsCategory.text="Category: "+sportItem.sport_category
         return view;
     }
 

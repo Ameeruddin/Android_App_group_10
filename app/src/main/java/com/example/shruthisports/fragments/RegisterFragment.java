@@ -18,7 +18,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.shruthisports.R;
 import com.example.shruthisports.SendMail;
-import com.example.shruthisports.activities.OTPVerification;
+import com.example.shruthisports.OTPVerification;
 
 import org.json.JSONObject;
 

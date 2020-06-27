@@ -2,6 +2,7 @@ package com.example.shruthisports.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,20 +14,22 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.shruthisports.R;
-import com.example.shruthisports.activities.ChangePasswordActivity;
+import com.example.shruthisports.activities.LoginActivity;
 
-public class SettingsFragment extends Fragment {
+public class LoginAsCaptainFragment extends Fragment {
 
     Context mContext;
-    Button changePassBtn;
+    Button redirectBtn;
+    SharedPreferences pref;
 
-    public SettingsFragment() {
+    public LoginAsCaptainFragment() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -39,20 +42,18 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        changePassBtn = view.findViewById(R.id.changePassBtn);
-        changePassBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, ChangePasswordActivity.class);
-                startActivity(intent);
-            }
-        });
+        pref = getActivity().getSharedPreferences("captain", Context.MODE_PRIVATE);
+        SharedPreferences.Editor mEditor = pref.edit();
+        mEditor.putBoolean("isCaptainCB", true);
+        mEditor.commit();
+        Intent intent = new Intent(mContext, LoginActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        return inflater.inflate(R.layout.fragment_login_as_captain, container, false);
     }
 }

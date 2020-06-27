@@ -20,12 +20,14 @@
         android:textStyle="bold"
         android:textSize="16sp"
         android:paddingTop="8dp"
+        android:id="@+id/nav_drawer_username"
         android:textColor="@android:color/black"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/nav_drawer_userid"
         android:textColor="@android:color/black"
         android:text="160117712345"/>
 

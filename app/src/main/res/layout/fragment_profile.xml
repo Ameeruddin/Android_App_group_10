@@ -73,6 +73,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
+                    android:id="@+id/user_profile_mail"
                     android:text="ugs17167_cse.abcdef@cbit.org.in"
                     android:textColor="#000000"
                     android:textSize="18sp" />
@@ -105,6 +106,7 @@
                     android:fontFamily="sans-serif-light"
                     android:text="1234567890"
                     android:textColor="#000000"
+                    android:id="@+id/user_profile_phone"
                     android:textSize="18sp" />
 
                 <View
@@ -135,6 +137,7 @@
                     android:fontFamily="sans-serif-light"
                     android:text="CSE-4"
                     android:textColor="#000000"
+                    android:id="@+id/user_profile_section"
                     android:textSize="18sp" />
 
                 <View
@@ -164,6 +167,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:text="3rd year"
+                    android:id="@+id/user_profile_year"
                     android:textColor="#000000"
                     android:textSize="18sp" />
 

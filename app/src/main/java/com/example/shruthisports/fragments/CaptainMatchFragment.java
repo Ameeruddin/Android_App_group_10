@@ -33,22 +33,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.Map;
 
-
-public class SportsDetailsFragment extends Fragment {
+public class CaptainMatchFragment extends Fragment {
 
     ListView listView;
     ArrayList<SportsListHeading> scheduledSports;
-    ArrayList<String> sportCategoryNames = new ArrayList<String>();
-    Context mContext;
+    ArrayList<String> sportNames = new ArrayList<String>();
+    Context mContext = getContext();
     SharedPreferences userPref;
     RecyclerView matchDetailsRecyclerView;
 
@@ -57,7 +52,7 @@ public class SportsDetailsFragment extends Fragment {
     JsonArrayRequest arrayRequest;
     JSONObject data;
 
-    public SportsDetailsFragment() {
+    public CaptainMatchFragment() {
         // Required empty public constructor
     }
 
@@ -70,77 +65,62 @@ public class SportsDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sports_details, container, false);
+        return inflater.inflate(R.layout.fragment_captain_match, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        matchDetailsRecyclerView = view.findViewById(R.id.SportsDetailsRecyclerView);
+        matchDetailsRecyclerView = view.findViewById(R.id.matchesDetailsRecyclerView);
         matchDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         func();
     }
 
     public void func(){
         scheduledSports = new ArrayList<SportsListHeading>();
-        sportCategoryNames.add("indoor"); sportCategoryNames.add("outdoor");
+        sportNames.add("cricket"); sportNames.add("football"); sportNames.add("basketball"); sportNames.add("badminton");
+        sportNames.add("kabaddi"); sportNames.add("table%20tennis"); sportNames.add("volley%20ball"); sportNames.add("chess");
+        sportNames.add("carroms"); sportNames.add("throw%20ball");
 
         userPref = getActivity().getSharedPreferences("user",Context.MODE_PRIVATE);
         final String accessTkn = userPref.getString("access_token","");
+        //final Long captainId = Long.parseLong(userPref.getString("userId",""));
 
-        Iterator sportsIterator = sportCategoryNames.iterator();
+        Iterator sportsIterator = sportNames.iterator();
         while(sportsIterator.hasNext()) {
             queue = Volley.newRequestQueue(mContext);
-            String url = "https://group-10-user-api.herokuapp.com/sportcategory?sport_category="+sportsIterator.next();
+            String url = "https://group-10-user-api.herokuapp.com/reporting_time?team_id=101&sport_name="+sportsIterator.next();
             arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                     new Response.Listener<JSONArray>() {
                         @RequiresApi(api = Build.VERSION_CODES.KITKAT)
                         @Override
                         public void onResponse(JSONArray response) {
                             try {
-
-                                for(int i=0;i<response.length();i++) {
-                                    JSONObject sport = response.getJSONObject(i);
+                                if(response.length()>0) {
+                                    JSONObject sport = response.getJSONObject(0);
 
                                     String sportName = sport.getString("sport_name");
-                                    String sportCategory = "Sport Category: " + sport.getString("sport_category");
-                                    Integer minTeamSize = sport.getInt("mini_team_size");
-                                    Integer maxTeamSize = sport.getInt("max_team_size");
-                                    String gender = sport.getString("gender");
-                                    String startDate = sport.getString("start_date");//.substring(1,3);
-                                    String endDate = sport.getString("end_date");//.substring(4,7);
-                                    if(startDate!=null&&startDate!="null"&&endDate!=null&&endDate!="null") {
-                                        SimpleDateFormat inputFormat = new SimpleDateFormat("E, dd MMM yyyy HH:mm:ss zzz", Locale.ENGLISH);
-                                        Date date = inputFormat.parse(startDate);
-                                        startDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(date);
-                                        date = inputFormat.parse(endDate);
-                                        endDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(date);
-                                    }
+                                    String matchTitle = sport.getString("match_title");
+                                    String branch1 = sport.getString("branch1");
+                                    String branch2 = sport.getString("branch2");
+                                    String startTime = sport.getString("start_time");
+                                    String reportingTime = sport.getString("reporting_time");
+                                    String matchDate = sport.getString("match_date");
                                     ArrayList<SportsListDetails> details = new ArrayList<>();
-
-                                    if (sportCategory != null) {
-                                        if (gender != null) {
-                                            details.add(new SportsListDetails(sportCategory + " (" + gender + ")"));
-                                        } else {
-                                            details.add(new SportsListDetails(sportCategory));
-                                        }
-                                    }
-                                    if (minTeamSize != null && maxTeamSize != null) {
-                                        details.add(new SportsListDetails("Team Size: " + minTeamSize + "-" + maxTeamSize));
-                                    }
-                                    if ((!startDate.equals("null")) && (!endDate.equals("null"))) {
-                                        details.add(new SportsListDetails("Dates: " + startDate + " - " + endDate));
-                                    }
-                                    SportsListHeading sportsListHeading = new SportsListHeading(sportName, details);
+                                    details.add(new SportsListDetails("Sport: "+sportName));
+                                    details.add(new SportsListDetails("Title: "+matchTitle));
+                                    details.add(new SportsListDetails("Date: "+matchDate));
+                                    details.add(new SportsListDetails("Start TIme: " + startTime));
+                                    details.add(new SportsListDetails("Reporting Time: " + reportingTime));
+                                    SportsListHeading sportsListHeading = new SportsListHeading(branch1 + " vs " + branch2, details);
                                     scheduledSports.add(sportsListHeading);
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
-                                Toast.makeText(getContext(),"error2",Toast.LENGTH_LONG).show();
+                                Toast.makeText(mContext,e.toString(),Toast.LENGTH_LONG).show();
                             }catch (Exception e){
-                                e.printStackTrace();
-                                Toast.makeText(getContext(),e.toString(),Toast.LENGTH_LONG).show();
+                                Toast.makeText(mContext,e.toString(),Toast.LENGTH_LONG).show();
                             }
                             SportsListDetailsAdapter adapter = new SportsListDetailsAdapter(scheduledSports);
                             matchDetailsRecyclerView.setAdapter(adapter);
