@@ -25,6 +25,10 @@
             android:icon="@drawable/ic_register"
             android:title="Register Team"/>
 
+        <item android:id="@+id/nav_captain_login"
+            android:icon="@drawable/ic_login"
+            android:title="Login as Captain"/>
+
     </group>
 
     <item android:title="Others">

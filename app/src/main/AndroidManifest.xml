@@ -11,11 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.OTPVerification"></activity>
-        <activity android:name=".MatchSchedulesActivity" />
+        <activity android:name=".activities.ChangePasswordActivity"></activity>
+        <activity android:name=".activities.MatchSchedulesActivity" />
         <activity android:name=".activities.RegisterTeamActivity" />
         <activity
             android:name=".activities.CaptainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.LoginActivity"
@@ -24,6 +25,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activities.SplashActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,6 +36,7 @@
         <activity
             android:name=".activities.MainActivity"
             android:logo="@drawable/cbit_logo"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

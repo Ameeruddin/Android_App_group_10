@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.OTPVerification"
+    tools:context=".OTPVerification"
     android:background="@color/colorPrimary">
     <LinearLayout
         xmlns:tools="http://schemas.android.com/tools"

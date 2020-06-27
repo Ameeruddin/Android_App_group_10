@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.SettingsFragment">
+    tools:context=".fragments.LoginAsCaptainFragment">
 
-    <Button
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="#fff"
-        android:layout_marginTop="25dp"
-        android:id="@+id/changePassBtn"
-        android:text="Change Password"/>
+        android:text="Redirecting..."
+        android:textColor="#000"
+        android:textSize="36sp"
+        android:layout_gravity="center"/>
+
 </FrameLayout>

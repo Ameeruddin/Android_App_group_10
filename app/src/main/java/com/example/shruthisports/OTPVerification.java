@@ -1,4 +1,4 @@
-package com.example.shruthisports.activities;
+package com.example.shruthisports;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -19,7 +19,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.shruthisports.R;
 import com.example.shruthisports.fragments.RegisterFragment;
 
 import org.json.JSONException;
@@ -50,7 +49,7 @@ public class OTPVerification extends Dialog implements TextWatcher {
         setContentView(R.layout.otp_verify);
 
         otpDialopTextView = findViewById(R.id.otp_dialog_textView);
-        otpDialopTextView.setText("Enter OTP:"+OTP);
+        otpDialopTextView.setText("Enter OTP:");
         otp_submit = findViewById(R.id.otp_submit);
         editText_one = findViewById(R.id.editTextone);
         editText_two = findViewById(R.id.editTexttwo);

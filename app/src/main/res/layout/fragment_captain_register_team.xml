@@ -36,13 +36,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="25dp"
         android:id="@+id/sectionLL"
+        android:layout_marginTop="15dp"
+        android:gravity="center_horizontal"
         android:layout_below="@+id/sportsSpinner">
 
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/branchSpinner"
-            android:layout_marginLeft="20dp"
             android:layout_marginRight="15dp"
             android:entries="@array/branches_array"
             tools:listitem="@android:layout/simple_spinner_item"/>
@@ -62,13 +63,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@+id/sectionLL"
-        android:id="@+id/genderRB"
+        android:id="@+id/genderRBLL"
         android:layout_marginBottom="20dp"
         android:layout_centerHorizontal="true">
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:id="@+id/genderRB">
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,7 +90,7 @@
         android:padding="10dp"
         android:background="@drawable/rounded_background_primary"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/genderRB"
+        android:layout_below="@+id/genderRBLL"
         android:id="@+id/teamRegisterBtn"
         android:textColor="#ffffff"/>
 </RelativeLayout>

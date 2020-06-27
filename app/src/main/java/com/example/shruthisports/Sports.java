@@ -11,7 +11,8 @@ public class Sports {
     private String end_date;
 
     public Sports(int sport_id, String sport_name, String sport_category,
-                  int mini_team_size, int max_team_size, String gender, String start_date, String end_date) {
+                  int mini_team_size, int max_team_size, String gender,
+                  String start_date, String end_date) {
         this.sport_id = sport_id;
         this.sport_name = sport_name;
         this.sport_category = sport_category;
