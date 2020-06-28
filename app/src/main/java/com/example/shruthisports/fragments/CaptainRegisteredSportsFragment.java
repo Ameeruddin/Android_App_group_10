@@ -120,7 +120,7 @@ public class CaptainRegisteredSportsFragment extends Fragment {
                                 details.add(new SportsListDetails("Team Members:"));
                                 for( TeamMember tm : teamMembers ){
                                     if(tm.getSportName().equals(sName)){
-                                        details.add(new SportsListDetails(tm.getMemberName()));
+                                        details.add(new SportsListDetails(tm.getMemberName()+" ("+tm.getMemberId()+")"));
                                     }
                                 }
                                 SportsListHeading sportsListHeading = new SportsListHeading(sName, details);

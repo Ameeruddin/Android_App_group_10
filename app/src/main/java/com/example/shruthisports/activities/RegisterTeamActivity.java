@@ -1,24 +1,47 @@
 package com.example.shruthisports.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.shruthisports.R;
 
-import static android.widget.Toast.makeText;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterTeamActivity extends AppCompatActivity {
 
     public LinearLayout linearLayoutParent;
     public EditText e;
-    public String s1,s2,s3;
+    public String s1,s2;
+    String sportName;
+    String branch;
+    int section;
+    String gender;
+    int teamSize;
+    long teamId;
+    String teamName;
 
     private int k;
     @Override
@@ -26,14 +49,17 @@ public class RegisterTeamActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_team);
 
+        sportName = getIntent().getStringExtra("sportName");
+        branch = getIntent().getStringExtra("branch");
+        section = getIntent().getIntExtra("section",1);
+        gender = getIntent().getStringExtra("gender");
+        teamSize = getIntent().getIntExtra("teamSize",1);
+        teamId = getIntent().getLongExtra("teamId",0);
+        teamName = generateTeamName();
+
         LinearLayout rootLayout = (LinearLayout) findViewById(R.id.linearLayoutparent);
         //this layout still needs to be vertical to hold the children.
-        for (int i = 0; i < 6; i++) {
-            TextView textViewm = new TextView(this);
-            textViewm.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-            textViewm.setText("Player "+(i+1));
-            //make a new horizontal LinearLayout each time to hold the children.
+        for (int i = 0; i < teamSize; i++) {
             LinearLayout temp = new LinearLayout(this);
             temp.setOrientation(LinearLayout.VERTICAL);
 
@@ -42,16 +68,11 @@ public class RegisterTeamActivity extends AppCompatActivity {
             temp1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT, 1));
 
-            TextView textView1 = new TextView(this);
-            textView1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-            textView1.setText("NAME");
-            temp1.addView(textView1); //add them to this temporary layout.
-
             EditText editText1 = new EditText(this);
             editText1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT, 1));
             editText1.setId(i*10+1);
+            editText1.setHint("Player"+(i+1)+"'s name");
             temp1.addView(editText1);
 
 
@@ -60,40 +81,15 @@ public class RegisterTeamActivity extends AppCompatActivity {
             temp2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT, 1));
 
-            TextView textView2 = new TextView(this);
-            textView2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-            textView2.setText("Roll No");
-            temp2.addView(textView2); //add them to this temporary layout.
-
             EditText editText2 = new EditText(this);
             editText2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT, 1));
             editText2.setId(i*10+2);
+            editText2.setHint("Player"+(i+1)+"'s id");
             temp2.addView(editText2);
-
-
-            LinearLayout temp3 = new LinearLayout(this);
-            temp3.setOrientation(LinearLayout.HORIZONTAL);
-            temp3.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-
-            TextView textView3 = new TextView(this);
-            textView3.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-            textView3.setText("Class");
-            temp3.addView(textView3); //add them to this temporary layout.
-
-            EditText editText3 = new EditText(this);
-            editText3.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-            editText3.setId(i*10+3);
-            temp3.addView(editText3);
 
             temp.addView(temp1);
             temp.addView(temp2);
-            temp.addView(temp3);
-            rootLayout.addView(textViewm);
             rootLayout.addView(temp);
         }
 
@@ -101,6 +97,11 @@ public class RegisterTeamActivity extends AppCompatActivity {
         btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT, 1));
         btn.setText("Register");
+        btn.setTextColor(Color.WHITE);
+        btn.setBackground(this.getResources().getDrawable(R.drawable.rounded_background_primary));
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)btn.getLayoutParams();
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        btn.setLayoutParams(params);
         rootLayout.addView(btn);
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -112,16 +113,75 @@ public class RegisterTeamActivity extends AppCompatActivity {
     }
 
     private void func() {
-        for(int i=0;i<6;i++){
+        final SharedPreferences userPref = getSharedPreferences("user", Context.MODE_PRIVATE);
+        final String accessTkn = userPref.getString("access_token","");
+        for(int i=0;i<teamSize;i++){
             EditText e1=(EditText)findViewById(10*i+1);
             EditText e2=(EditText)findViewById(10*i+2);
-            EditText e3=(EditText)findViewById(10*i+3);
             s1=e1.getText().toString();
             s2=e2.getText().toString();
-            s3=e3.getText().toString();
-            makeText(this, "Name :"+s1, Toast.LENGTH_SHORT).show();
-            makeText(this, "Roll no:"+s2, Toast.LENGTH_SHORT).show();
-            makeText(this, "Class :"+s3, Toast.LENGTH_SHORT).show();
+
+            RequestQueue queue = Volley.newRequestQueue(this);
+            JSONObject data = new JSONObject();
+            try {
+                data.put("member_ID",Long.parseLong(s2));
+                data.put("sport_name",sportName);
+                data.put("team_id",teamId);
+                //data.put("team_name",teamName);
+                data.put("member_name",s1);
+                data.put("section",section);
+                data.put("branch",branch);
+                data.put("gender",gender);
+            }catch (JSONException e) {
+                e.printStackTrace();
+//                Toast.makeText(getApplicationContext(),"Team couldn't be registered",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Members Successfully Registered",Toast.LENGTH_LONG).show();
+            }
+            String url = "https://group-10-user-api.herokuapp.com/registration";
+            JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
+                    new Response.Listener<JSONObject>() {
+                        @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Toast.makeText(getApplicationContext(),"Members Successfully Registered",Toast.LENGTH_LONG).show();
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getApplicationContext(),"Members Successfully Registered",Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(),error.toString()+"Team couldn't be registered",Toast.LENGTH_LONG).show();
+                }
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Authorization", "Bearer " + accessTkn);
+                    return params;
+                }
+            };
+            queue.add(objectRequest);
         }
+    }
+
+    private String generateTeamName() {
+        int teamNameLength = branch.length()+sportName.length()+3;
+        char[] teamNameArray = new char[teamNameLength];
+        int j=-1;
+        for(int i=0;i<branch.length();i++){
+            teamNameArray[++j]=branch.charAt(i);
+        }
+        teamNameArray[++j]='-';
+        teamNameArray[++j]='0';
+        teamNameArray[j]+=section;
+        for(int i=0;i<sportName.length();i++){
+            teamNameArray[++j]=sportName.charAt(i);
+        }
+        if(gender.equals("MALE")) {
+            teamNameArray[teamNameLength - 1] = 'M';
+        }else{
+            teamNameArray[teamNameLength - 1] = 'G';
+        }
+
+        return new String(teamNameArray);
     }
 }
