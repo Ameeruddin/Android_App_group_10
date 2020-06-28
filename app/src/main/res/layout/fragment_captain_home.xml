@@ -9,21 +9,21 @@
     android:padding="10dp">
 
     <Button
-        android:text="sports\nschedules"
+        android:text="Match\nschedules"
         android:layout_columnSpan="2"
         android:layout_rowSpan="2"
+        android:id="@+id/captain_match_schedules_btn"
         android:textStyle="bold"
         android:textColor="#000"
         android:layout_margin="4dp"
         android:background="#A5CB43"
         android:layout_rowWeight="2"
-        android:id="@+id/home_sports_schedules_btn"
         android:layout_columnWeight="2"
         android:layout_gravity="fill"/>
     <Button
-        android:text="Register\nTeam"
+        android:text="Registration\nStatus"
+        android:id="@+id/captain_registration_status_btn"
         android:layout_rowSpan="1"
-        android:id="@+id/home_register_team_btn"
         android:textStyle="bold"
         android:textColor="#000"
         android:layout_margin="4dp"
@@ -33,10 +33,10 @@
         android:layout_columnWeight="2"
         android:layout_gravity="fill"/>
     <Button
-        android:text="Captain\nLogin"
+        android:text="Registered\nSports"
         android:layout_rowSpan="1"
+        android:id="@+id/captain_registered_sports_btn"
         android:textStyle="bold"
-        android:id="@+id/home_captain_login_btn"
         android:textColor="#000"
         android:background="#FFBBBA"
         android:layout_margin="4dp"
@@ -45,11 +45,11 @@
         android:layout_columnSpan="2"
         android:layout_gravity="fill"/>
     <Button
-        android:text="User\nProfile"
+        android:text="Captain\nProfile"
         android:layout_rowSpan="1"
         android:textStyle="bold"
+        android:id="@+id/captain_captain_profile_btn"
         android:textColor="#000"
-        android:id="@+id/home_user_profile_btn"
         android:layout_margin="4dp"
         android:layout_columnSpan="2"
         android:layout_rowWeight="1"
@@ -58,11 +58,11 @@
         android:layout_gravity="fill"/>
 
     <Button
-        android:text="Sports\nDetails"
+        android:text="Register\nTeam"
         android:layout_rowWeight="2"
         android:textStyle="bold"
+        android:id="@+id/captain_register_team_btn"
         android:textColor="#000"
-        android:id="@+id/home_sports_details_btn"
         android:layout_rowSpan="2"
         android:layout_margin="4dp"
         android:layout_columnWeight="2"
@@ -74,8 +74,8 @@
         android:text="Settings"
         android:textStyle="bold"
         android:textColor="#000"
+        android:id="@+id/captain_settings_btn"
         android:layout_rowSpan="1"
-        android:id="@+id/home_settings_btn"
         android:background="#565BAF"
         android:layout_margin="4dp"
         android:layout_rowWeight="1"
@@ -86,9 +86,9 @@
     <Button
         android:text="Logout"
         android:textStyle="bold"
+        android:id="@+id/captain_logout_btn"
         android:textColor="#000"
         android:layout_rowSpan="1"
-        android:id="@+id/home_logout_btn"
         android:layout_rowWeight="1"
         android:layout_columnSpan="1"
         android:layout_margin="4dp"

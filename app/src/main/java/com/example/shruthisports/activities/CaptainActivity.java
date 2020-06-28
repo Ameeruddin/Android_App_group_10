@@ -25,8 +25,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.shruthisports.fragments.CaptainMatchFragment;
 import com.example.shruthisports.R;
+import com.example.shruthisports.fragments.CaptainHomeFragment;
+import com.example.shruthisports.fragments.CaptainMatchFragment;
 import com.example.shruthisports.fragments.CaptainRegisterTeamFragment;
 import com.example.shruthisports.fragments.CaptainRegisteredSportsFragment;
 import com.example.shruthisports.fragments.LogoutFragment;
@@ -47,6 +48,7 @@ public class CaptainActivity extends AppCompatActivity implements NavigationView
     NavigationView captainNavigationView;
     TextView navDrawerUsername;
     TextView navDrawerUserid;
+    Toolbar captainToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,7 @@ public class CaptainActivity extends AppCompatActivity implements NavigationView
 
         initializeNavDetails();
 
-        Toolbar captainToolbar = findViewById(R.id.captain_toolbar);
+        captainToolbar = findViewById(R.id.captain_toolbar);
         setSupportActionBar(captainToolbar);
 
         captainDrawerLayout = findViewById(R.id.captain_drawer_layout);
@@ -73,7 +75,8 @@ public class CaptainActivity extends AppCompatActivity implements NavigationView
 
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.captain_fragment_container,
-                    new CaptainMatchFragment()).commit();
+                    new CaptainHomeFragment()).commit();
+            captainToolbar.setTitle("Shruthi Sports");
             captainNavigationView.setCheckedItem(R.id.captain_nav_home);
         }
     }
@@ -85,8 +88,9 @@ public class CaptainActivity extends AppCompatActivity implements NavigationView
         }else if(getCheckedItem(captainNavigationView)==0){
             return;
         }else{
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new CaptainMatchFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.captain_fragment_container,
+                    new CaptainHomeFragment()).commit();
+            captainToolbar.setTitle("Shruthi Sports");
             captainNavigationView.setCheckedItem(R.id.nav_home);
         }
     }
@@ -96,31 +100,38 @@ public class CaptainActivity extends AppCompatActivity implements NavigationView
         switch(item.getItemId()){
             case R.id.captain_nav_home:
                 getSupportFragmentManager().beginTransaction().replace(R.id.captain_fragment_container,
-                        new CaptainMatchFragment()).commit();
+                        new CaptainHomeFragment()).commit();
+                captainToolbar.setTitle("Shruthi Sports");
                 break;
             case R.id.captain_nav_register:
                 getSupportFragmentManager().beginTransaction().replace(R.id.captain_fragment_container,
                         new CaptainRegisterTeamFragment()).commit();
+                captainToolbar.setTitle("Register Team");
                 break;
             case R.id.captain_nav_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.captain_fragment_container,
                         new ProfileFragment()).commit();
+                captainToolbar.setTitle("Captain Profile");
                 break;
             case R.id.captain_nav_logout:
                 getSupportFragmentManager().beginTransaction().replace(R.id.captain_fragment_container,
                         new LogoutFragment()).commit();
+                captainToolbar.setTitle("Logout");
                 break;
             case R.id.captain_nav_schedules:
                 getSupportFragmentManager().beginTransaction().replace(R.id.captain_fragment_container,
                         new CaptainMatchFragment()).commit();
+                captainToolbar.setTitle("Match Schedules");
                 break;
             case R.id.captain_nav_registered:
                 getSupportFragmentManager().beginTransaction().replace(R.id.captain_fragment_container,
                         new CaptainRegisteredSportsFragment()).commit();
+                captainToolbar.setTitle("Registered Sports");
                 break;
             case R.id.captain_nav_status:
                 getSupportFragmentManager().beginTransaction().replace(R.id.captain_fragment_container,
                         new TeamStatusFragment()).commit();
+                captainToolbar.setTitle("Registration Status");
                 break;
         }
         captainDrawerLayout.closeDrawer(GravityCompat.START);

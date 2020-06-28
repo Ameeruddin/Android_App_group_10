@@ -26,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.shruthisports.R;
+import com.example.shruthisports.fragments.HomeFragment;
 import com.example.shruthisports.fragments.LoginAsCaptainFragment;
 import com.example.shruthisports.fragments.LogoutFragment;
 import com.example.shruthisports.fragments.ProfileFragment;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     TextView navDrawerUsername;
     TextView navDrawerUserid;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         initializeNavDetails();
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -74,7 +76,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if(savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new ScheduleFragment()).commit();
+                    new HomeFragment()).commit();
+            toolbar.setTitle("Shruthi Sports");
             navigationView.setCheckedItem(R.id.nav_home);
         }
     }
@@ -88,7 +91,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return;
         }else{
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new ScheduleFragment()).commit();
+                    new HomeFragment()).commit();
+            toolbar.setTitle("Shruthi Sports");
             navigationView.setCheckedItem(R.id.nav_home);
         }
     }
@@ -98,35 +102,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch(item.getItemId()){
             case R.id.nav_home:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ScheduleFragment()).commit();
+                        new HomeFragment()).commit();
+                toolbar.setTitle("Shruthi Sports");
                 break;
             case R.id.nav_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new ProfileFragment()).commit();
+                toolbar.setTitle("User Profile");
                 break;
             case R.id.nav_schedule:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new ScheduleFragment()).commit();
+                toolbar.setTitle("Sports Schedules");
                 break;
             case R.id.nav_settings:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new SettingsFragment()).commit();
+                toolbar.setTitle("Settings");
                 break;
             case R.id.nav_details:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new SportsDetailsFragment()).commit();
+                toolbar.setTitle("Sports Details");
                 break;
             case R.id.nav_register:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new UserTeamRegisterFragment()).commit();
+                toolbar.setTitle("Register Team");
                 break;
             case R.id.nav_captain_login:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new LoginAsCaptainFragment()).commit();
+                toolbar.setTitle("Login as Captain");
                 break;
             case R.id.nav_logout:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new LogoutFragment()).commit();
+                toolbar.setTitle("Logout");
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);

@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     tools:context=".fragments.CaptainRegisterTeamFragment"
-    android:gravity="center">
+    android:gravity="center"
+    android:layout_gravity="center">
 
     <TextView
         android:layout_width="wrap_content"
@@ -17,15 +22,55 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/registerSportText"/>
 
-    <Spinner
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginTop="30dp"
+        android:layout_below="@+id/registerSportText"
+        android:id="@+id/sportCategoryRBLL"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true">
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/sportCategoryRB">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Indoor"
+                android:id="@+id/indoorRB"
+                android:layout_marginRight="30dp"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/outdoorRB"
+                android:hint="Outdoor"/>
+        </RadioGroup>
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Sports Details"
+        android:textColor="#fff"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:padding="15dp"
+        android:id="@+id/getSportsDetailsBtn"
+        android:background="@drawable/rounded_background_primary"
+        android:layout_below="@+id/sportCategoryRBLL"/>
+
+    <Spinner
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:entries="@array/sports_array"
         android:id="@+id/sportsSpinner"
         android:layout_marginLeft="20dp"
         android:popupBackground="@android:color/white"
-        android:layout_below="@+id/registerSportText"
+        android:layout_below="@+id/getSportsDetailsBtn"
         android:layout_centerHorizontal="true"
         tools:listitem="@layout/support_simple_spinner_dropdown_item"/>
 
@@ -64,7 +109,6 @@
         android:orientation="horizontal"
         android:layout_below="@+id/sectionLL"
         android:id="@+id/genderRBLL"
-        android:layout_marginBottom="20dp"
         android:layout_centerHorizontal="true">
         <RadioGroup
             android:layout_width="wrap_content"
@@ -75,22 +119,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Men's"
+                android:id="@+id/mensRB"
                 android:layout_marginRight="30dp"/>
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/womensRB"
                 android:hint="Women's"/>
         </RadioGroup>
     </LinearLayout>
+
+    <EditText
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:hint="    Team Size   "
+        android:id="@+id/teamSizeET"
+        android:layout_below="@+id/genderRBLL"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Register Team"
         android:padding="10dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/rounded_background_primary"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/genderRBLL"
+        android:layout_below="@+id/teamSizeET"
         android:id="@+id/teamRegisterBtn"
         android:textColor="#ffffff"/>
 </RelativeLayout>
+</ScrollView>

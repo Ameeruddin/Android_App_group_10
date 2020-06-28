@@ -20,10 +20,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.shruthisports.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,7 +41,7 @@ public class TeamStatusFragment extends Fragment {
 
     //creating objects required to interact with REST api
     private RequestQueue queue;
-    JsonObjectRequest objectRequest;
+    JsonArrayRequest arrayRequest;
     JSONObject data;
     SharedPreferences userPref;
     String accessTkn;
@@ -89,12 +90,13 @@ public class TeamStatusFragment extends Fragment {
 
                 String url="https://group-10-user-api.herokuapp.com/team_status?team_id="+teamId+"&sport_name="+sport;
                 queue = Volley.newRequestQueue(mContext);
-                objectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
-                        new Response.Listener<JSONObject>() {
+                arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
+                        new Response.Listener<JSONArray>() {
                             @Override
-                            public void onResponse(JSONObject response) {
+                            public void onResponse(JSONArray response) {
                                 try {
-                                    String status = response.getString("status");
+                                    JSONObject resp = response.getJSONObject(0);
+                                    String status = resp.getString("status");
                                     Toast.makeText(mContext,status,Toast.LENGTH_LONG).show();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -114,7 +116,7 @@ public class TeamStatusFragment extends Fragment {
                         return params;
                     }
                 };
-                queue.add(objectRequest);
+                queue.add(arrayRequest);
             }
         });
     }
