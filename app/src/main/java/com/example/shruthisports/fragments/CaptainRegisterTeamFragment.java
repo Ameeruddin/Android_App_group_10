@@ -118,6 +118,8 @@ public class CaptainRegisterTeamFragment extends Fragment {
         SharedPreferences userPref = getActivity().getSharedPreferences("user",Context.MODE_PRIVATE);
         final Long userId = userPref.getLong("userId",0);
         Intent intent = new Intent(mContext, RegisterTeamActivity.class);
+        String[] tn = sportName.split(" ");
+        sportName = tn[0];
         intent.putExtra("sportName", sportName);
         intent.putExtra("teamId",userId);
         intent.putExtra("branch", branch);

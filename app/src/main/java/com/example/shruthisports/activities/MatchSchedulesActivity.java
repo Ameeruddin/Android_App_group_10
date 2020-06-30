@@ -69,17 +69,19 @@ public class MatchSchedulesActivity extends AppCompatActivity {
 
                                 String sportName = sport.getString("sport_name");
                                 String matchTitle = sport.getString("match_title");
-                                String branch1 = sport.getString("branch1");
-                                String branch2 = sport.getString("branch2");
+                                String branch1 = sport.getString("team1");
+                                String branch2 = sport.getString("team2");
                                 String startTime = sport.getString("start_time");
                                 String reportingTime = sport.getString("reporting_time");
                                 String matchDate = sport.getString("match_date");
+                                String venue = sport.getString("venue");
 
                                 ArrayList<SportsListDetails> details = new ArrayList<>();
                                 details.add(new SportsListDetails("Title: "+matchTitle));
                                 details.add(new SportsListDetails("Date: "+matchDate));
-                                details.add(new SportsListDetails("Start TIme: " + startTime));
+                                details.add(new SportsListDetails("Start Time: " + startTime));
                                 details.add(new SportsListDetails("Reporting Time: " + reportingTime));
+                                details.add(new SportsListDetails("Venue: " + venue));
                                 SportsListHeading sportsListHeading = new SportsListHeading(branch1 + " vs " + branch2, details);
 
                                 scheduledSports.add(sportsListHeading);

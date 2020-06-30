@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,19 +14,16 @@ import androidx.fragment.app.Fragment;
 
 import com.example.shruthisports.R;
 import com.google.android.material.navigation.NavigationView;
+import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageListener;
 
 public class CaptainHomeFragment extends Fragment {
 
     Context mContext;
-    Button captainMatchSchedulesBtn;
-    Button captainRegistrationStatusBtn;
-    Button captainRegisteredSportsBtn;
-    Button captainCaptainProfileBtn;
-    Button captainRegisterTeamBtn;
-    Button captainSettingsBtn;
-    Button captainLogoutBtn;
     Toolbar captainToolbar;
     NavigationView navigationView;
+    CarouselView carouselView;
+    int[] sampleImages = {R.drawable.ssp1,R.drawable.ssp2,R.drawable.ssp3,R.drawable.ssp4,R.drawable.ssp5,R.drawable.ssp6,R.drawable.ssp7};
 
     public CaptainHomeFragment() {
         // Required empty public constructor
@@ -50,83 +47,17 @@ public class CaptainHomeFragment extends Fragment {
         navigationView = getActivity().findViewById(R.id.captain_nav_view);
         captainToolbar = getActivity().findViewById(R.id.captain_toolbar);
 
-        captainMatchSchedulesBtn = view.findViewById(R.id.captain_match_schedules_btn);
-        captainRegistrationStatusBtn = view.findViewById(R.id.captain_registration_status_btn);
-        captainRegisteredSportsBtn = view.findViewById(R.id.captain_registered_sports_btn);
-        captainCaptainProfileBtn = view.findViewById(R.id.captain_captain_profile_btn);
-        captainRegisterTeamBtn = view.findViewById(R.id.captain_register_team_btn);
-        captainSettingsBtn = view.findViewById(R.id.captain_settings_btn);
-        captainLogoutBtn = view.findViewById(R.id.captain_logout_btn);
-
-        captainMatchSchedulesBtn.setOnClickListener(new View.OnClickListener() {
+        ImageListener imageListener = new ImageListener() {
             @Override
-            public void onClick(View v) {
-                navigationView.setCheckedItem(R.id.captain_nav_schedules);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.captain_fragment_container,
-                        new CaptainMatchFragment()).commit();
-                captainToolbar.setTitle("Match Schedules");
+            public void setImageForPosition(int position, ImageView imageView) {
+                imageView.setImageResource(sampleImages[position]);
             }
-        });
+        };
 
-        captainRegistrationStatusBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigationView.setCheckedItem(R.id.captain_nav_status);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.captain_fragment_container,
-                        new TeamStatusFragment()).commit();
-                captainToolbar.setTitle("Registration Status");
-            }
-        });
+        carouselView = (CarouselView) view.findViewById(R.id.carouselView);
+        carouselView.setImageListener(imageListener);
+        carouselView.setPageCount(sampleImages.length);
 
-        captainRegisteredSportsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigationView.setCheckedItem(R.id.captain_nav_registered);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.captain_fragment_container,
-                        new CaptainRegisteredSportsFragment()).commit();
-                captainToolbar.setTitle("Registered Sports");
-            }
-        });
-
-        captainCaptainProfileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigationView.setCheckedItem(R.id.captain_nav_profile);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.captain_fragment_container,
-                        new ProfileFragment()).commit();
-                captainToolbar.setTitle("Captain Profile");
-            }
-        });
-
-        captainRegisterTeamBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigationView.setCheckedItem(R.id.captain_nav_register);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.captain_fragment_container,
-                        new CaptainRegisterTeamFragment()).commit();
-                captainToolbar.setTitle("Register Team");
-            }
-        });
-
-        captainSettingsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigationView.setCheckedItem(R.id.captain_nav_settings);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.captain_fragment_container,
-                        new SettingsFragment()).commit();
-                captainToolbar.setTitle("Settings");
-            }
-        });
-
-        captainLogoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navigationView.setCheckedItem(R.id.captain_nav_logout);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.captain_fragment_container,
-                        new LogoutFragment()).commit();
-                captainToolbar.setTitle("Logout");
-            }
-        });
     }
 
     @Override
