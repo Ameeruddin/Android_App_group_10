@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.shruthisports">
+    package="com.example.shruthisports"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -8,12 +9,18 @@
         android:allowBackup="true"
         android:icon="@drawable/cbit_logo"
         android:label="Shruthi Sports"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/cbit_logo"
+        android:hardwareAccelerated="false"
         android:supportsRtl="true"
+        android:largeHeap="true"
+        tools:node="replace"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.ChangePasswordActivity"></activity>
-        <activity android:name=".activities.MatchSchedulesActivity" />
-        <activity android:name=".activities.RegisterTeamActivity" />
+        <activity android:name=".activities.ChangePasswordActivity"
+            android:label="Change Password"/>
+        <activity android:name=".activities.MatchSchedulesActivity"
+            android:label="Match Schedules"/>
+        <activity android:name=".activities.RegisterTeamActivity"
+            android:label="Register Team"/>
         <activity
             android:name=".activities.CaptainActivity"
             android:screenOrientation="portrait"
@@ -29,7 +36,6 @@
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

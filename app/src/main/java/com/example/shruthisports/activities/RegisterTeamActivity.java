@@ -1,6 +1,7 @@
 package com.example.shruthisports.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -37,7 +38,7 @@ public class RegisterTeamActivity extends AppCompatActivity {
     public String s1,s2;
     String sportName;
     String branch;
-    int section;
+    Integer section;
     String gender;
     int teamSize;
     long teamId;
@@ -124,18 +125,18 @@ public class RegisterTeamActivity extends AppCompatActivity {
             RequestQueue queue = Volley.newRequestQueue(this);
             JSONObject data = new JSONObject();
             try {
-                data.put("member_ID",Long.parseLong(s2));
                 data.put("sport_name",sportName);
+                data.put("member_ID",Long.parseLong(s2));
                 data.put("team_id",teamId);
-                //data.put("team_name",teamName);
+                data.put("team_name",teamName);
                 data.put("member_name",s1);
-                data.put("section",section);
+                data.put("section",section.toString());
                 data.put("branch",branch);
                 data.put("gender",gender);
             }catch (JSONException e) {
                 e.printStackTrace();
-//                Toast.makeText(getApplicationContext(),"Team couldn't be registered",Toast.LENGTH_SHORT).show();
-                Toast.makeText(getApplicationContext(),"Members Successfully Registered",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Team couldn't be registered",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(),"Members Successfully Registered",Toast.LENGTH_LONG).show();
             }
             String url = "https://group-10-user-api.herokuapp.com/registration";
             JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST, url, data,
@@ -149,7 +150,6 @@ public class RegisterTeamActivity extends AppCompatActivity {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(getApplicationContext(),"Members Successfully Registered",Toast.LENGTH_LONG).show();
-//                    Toast.makeText(getApplicationContext(),error.toString()+"Team couldn't be registered",Toast.LENGTH_LONG).show();
                 }
             }) {
                 @Override
@@ -161,6 +161,8 @@ public class RegisterTeamActivity extends AppCompatActivity {
             };
             queue.add(objectRequest);
         }
+        Intent intent = new Intent(getApplicationContext(), CaptainActivity.class);
+        startActivity(intent);
     }
 
     private String generateTeamName() {
