@@ -86,12 +86,12 @@ public class CaptainMatchFragment extends Fragment {
 
         userPref = getActivity().getSharedPreferences("user",Context.MODE_PRIVATE);
         final String accessTkn = userPref.getString("access_token","");
-        //final Long captainId = Long.parseLong(userPref.getString("userId",""));
+        final Long captainId = Long.parseLong(userPref.getString("userId",""));
 
         Iterator sportsIterator = sportNames.iterator();
         while(sportsIterator.hasNext()) {
             queue = Volley.newRequestQueue(mContext);
-            String url = "https://group-10-user-api.herokuapp.com/reporting_time?team_id=101&sport_name="+sportsIterator.next();
+            String url = "https://group-10-user-api.herokuapp.com/reporting_time?team_id="+captainId+"&sport_name="+sportsIterator.next();
             arrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                     new Response.Listener<JSONArray>() {
                         @RequiresApi(api = Build.VERSION_CODES.KITKAT)

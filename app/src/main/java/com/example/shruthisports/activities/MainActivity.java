@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             uEditor.commit();
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Toast.makeText(getApplicationContext(),"error2",Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"",Toast.LENGTH_LONG).show();
                         }catch (Exception e){
                             Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_LONG).show();
                         }

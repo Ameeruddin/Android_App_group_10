@@ -112,10 +112,10 @@ public class LoginFragment extends Fragment {
     //function to validate the details given by the user
     private Boolean isValid() {
         //inserting user given values into JSON object
+        final Long userId = Long.parseLong(loginIdET.getText().toString());
+        String password=loginPasswordET.getText().toString();
+        Boolean captain=loginCaptainCB.isChecked();
         try{
-            String userId=loginIdET.getText().toString();
-            String password=loginPasswordET.getText().toString();
-            Boolean captain=loginCaptainCB.isChecked();
             data.put("user_id",userId);
             data.put("password_",password);
         }catch(Exception e){
@@ -134,6 +134,7 @@ public class LoginFragment extends Fragment {
                         try {
                             accessTkn = response.getString("access_token");
                             uEditor.putString("access_token",accessTkn);
+                            uEditor.putLong("userId",userId);
                             uEditor.commit();
                             //Toast.makeText(mContext,"access"+accessTkn,Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(mContext, MainActivity.class);

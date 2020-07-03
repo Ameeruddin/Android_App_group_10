@@ -43,7 +43,7 @@ public class LogoutFragment extends Fragment {
         userPref = getActivity().getSharedPreferences("user",Context.MODE_PRIVATE);
         SharedPreferences.Editor uEditor = userPref.edit();
         uEditor.putBoolean("keepLoggedIn", false);
-        uEditor.putString("userId","");
+        uEditor.putLong("userId",0);
         uEditor.putString("password","");
         uEditor.commit();
 

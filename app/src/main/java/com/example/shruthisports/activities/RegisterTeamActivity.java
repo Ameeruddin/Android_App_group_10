@@ -121,6 +121,16 @@ public class RegisterTeamActivity extends AppCompatActivity {
             EditText e2=(EditText)findViewById(10*i+2);
             s1=e1.getText().toString();
             s2=e2.getText().toString();
+            if(s1.equals("")||s2.equals("")){
+                Toast.makeText(getApplicationContext(),"Please enter all the details",Toast.LENGTH_LONG).show();
+                return;
+            }
+        }
+        for(int i=0;i<teamSize;i++){
+            EditText e1=(EditText)findViewById(10*i+1);
+            EditText e2=(EditText)findViewById(10*i+2);
+            s1=e1.getText().toString();
+            s2=e2.getText().toString();
 
             RequestQueue queue = Volley.newRequestQueue(this);
             JSONObject data = new JSONObject();
