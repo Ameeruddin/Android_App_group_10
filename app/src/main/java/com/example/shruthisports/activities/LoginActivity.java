@@ -1,12 +1,12 @@
 package com.example.shruthisports.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.shruthisports.R;
 import com.example.shruthisports.adapters.LoginTabAdapter;
@@ -66,7 +66,6 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     @Override
